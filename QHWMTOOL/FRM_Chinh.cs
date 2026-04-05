@@ -22,7 +22,6 @@ namespace QHWMTOOL
         string cookie = "";
         string userId = "";
         string userName = "";
-        bool dangLoadForm = true;
         string fields = "facebook_reaction";
         private async void BTN_BatDau_Click(object sender, EventArgs e)
         {
@@ -65,6 +64,7 @@ namespace QHWMTOOL
             if (string.IsNullOrEmpty(fb_dtsg) || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(lsd) || string.IsNullOrEmpty(userId))
             {
                 await GetFacebook();
+                return;
             }
 
             LBL_CookieFb.Text = "Profile FB";
@@ -318,6 +318,7 @@ namespace QHWMTOOL
             else
             {
                 MessageBox.Show("Không tìm thấy NAME người dùng trong cookie! Vui lòng kiểm tra lại!!!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dangChay = false;
                 return;
             }
 
@@ -510,10 +511,6 @@ namespace QHWMTOOL
                         userId = data[10].Trim() ?? "";
                     }
                     TDS_token = TXB_TokenTDS.Text.ToString();
-                    if (string.IsNullOrEmpty(cookie) || cookie.Length == 0)
-                    {
-                        dangLoadForm = false;
-                    }
                 }
             }
             catch { }
@@ -626,6 +623,10 @@ namespace QHWMTOOL
 
         private async void BTN_LuuCauHinh_Click(object sender, EventArgs e)
         {
+            if (TXB_Cookie.Text.Length > 50)
+            {
+                await GetFacebook();
+            }
             LuuCauHinh();
             LoadCauHinh();
             if (TXB_TongXu.Text.Length == 0)
@@ -638,16 +639,6 @@ namespace QHWMTOOL
                     SLT_TenAcc.Text = $"Xin chào: {profile.user} chúc một ngày tốt lành";
                 }
             }    
-        }
-
-        private async void TXB_Cookie_TextChanged(object sender, EventArgs e)
-        {
-            if (dangLoadForm) return;
-            if (TXB_Cookie.Text.Length > 50)
-            {
-                await GetFacebook();
-                LuuCauHinh();
-            }
         }
 
         private void RTB_Chinh_DoubleClick(object sender, EventArgs e)

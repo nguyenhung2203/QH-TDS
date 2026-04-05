@@ -452,7 +452,6 @@
             TXB_Cookie.TabIndex = 16;
             TXB_Cookie.TextAlignment = ContentAlignment.MiddleLeft;
             TXB_Cookie.Watermark = "";
-            TXB_Cookie.TextChanged += TXB_Cookie_TextChanged;
             // 
             // BTN_LuuCauHinh
             // 
