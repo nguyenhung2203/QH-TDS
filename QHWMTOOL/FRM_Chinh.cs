@@ -355,7 +355,7 @@ namespace QHWMTOOL
             {
                 SetPostHeaders(request);
 
-                string idBaiViet = nhiemVu.id.Split('_')[1];
+                string idBaiViet = nhiemVu.id.Contains("_") ? nhiemVu.id.Split('_')[1] : nhiemVu.id;
                 string chuoiCanMaHoa = "feedback:" + idBaiViet;
                 var idbasse64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(chuoiCanMaHoa));
 
@@ -577,7 +577,6 @@ namespace QHWMTOOL
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36";
             request.KeepAlive = true;
             request.AllowAutoRedirect = true;
-
             request.AddHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
             request.AddHeader("accept-language", "vi,en;q=0.9");
             request.AddHeader("cache-control", "max-age=0");
@@ -647,6 +646,7 @@ namespace QHWMTOOL
             if (TXB_Cookie.Text.Length > 50)
             {
                 await GetFacebook();
+                LuuCauHinh();
             }
         }
 
